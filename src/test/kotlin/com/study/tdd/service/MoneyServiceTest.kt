@@ -3,6 +3,7 @@ package com.study.tdd.service
 import com.study.tdd.TddProjectApplication
 import com.study.tdd.dto.Dollar
 import com.study.tdd.dto.Franc
+import com.study.tdd.dto.Money
 import io.kotest.matchers.shouldBe
 import mu.KotlinLogging
 import org.junit.jupiter.api.AfterAll
@@ -24,26 +25,19 @@ class MoneyServiceTest {
     }
 
     @Test
-    fun dollarTest() {
-        println("dollarTest start...")
+    fun moneyTest() {
+        println("moneyTest start...")
 
-        val dollar = Dollar(5)
-        dollar.times(2).shouldBe(Dollar(10))
-        dollar.times(3).shouldBe(Dollar(15))
+        val dollar = Money(10).dollar()
+        dollar.getString().shouldBe("10 USD")
+        dollar.equals(Money(20).dollar()).shouldBe(false)
+        dollar.equals(Money(10).franc()).shouldBe(false)
+        dollar.equals(Money(10).dollar()).shouldBe(true)
+
+        val franc = Money(20).franc()
+        franc.getString().shouldBe("20 CHF")
 
         println("dollarTest end...")
-    }
-
-    @Test
-    fun francTest() {
-        println("francTest start...")
-
-        val franc = Franc(2)
-        franc.times(5).shouldBe(Franc(10))
-        franc.times(10).shouldBe(Franc(20))
-        franc.equals(Franc(1).times(2))
-
-        println("francTest end...")
     }
 
     @AfterAll
